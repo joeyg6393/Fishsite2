@@ -70,7 +70,7 @@ export function EnhancedHomePage({ posts }: EnhancedHomePageProps) {
             <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="lg:hidden">
               <Menu className="h-6 w-6" />
             </button>
-            <Link href="/" className="text-2xl font-bold text-blue-600">FishBlog</Link>
+            <Link href="/" className="text-2xl font-bold text-blue-600">The Reel Authority</Link>
           </div>
           <nav className={`${isMenuOpen ? 'block' : 'hidden'} lg:block absolute lg:relative top-full left-0 w-full lg:w-auto bg-white lg:bg-transparent shadow-md lg:shadow-none`}>
             <ul className="flex flex-col lg:flex-row space-y-2 lg:space-y-0 lg:space-x-6 p-4 lg:p-0">
