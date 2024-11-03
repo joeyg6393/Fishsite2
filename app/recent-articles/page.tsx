@@ -2,6 +2,24 @@ import { getPosts } from '@/lib/graphql-client';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Recent Articles - The Reel Authority',
+  description: 'Browse our latest fishing articles, tips, and gear reviews organized by category.',
+  openGraph: {
+    title: 'Recent Articles - The Reel Authority',
+    description: 'Browse our latest fishing articles, tips, and gear reviews organized by category.',
+  }
+};
 
 export default async function RecentArticlesPage() {
   const { posts } = await getPosts();
@@ -19,7 +37,21 @@ export default async function RecentArticlesPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold mb-8">Recent Articles by Category</h1>
+      <Breadcrumb>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink asChild>
+              <Link href="/">Home</Link>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>Recent Articles</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
+
+      <h1 className="text-4xl font-bold mb-8 mt-6">Recent Articles by Category</h1>
       
       {Object.entries(postsByCategory).map(([category, categoryPosts]) => (
         <section key={category} className="mb-12">

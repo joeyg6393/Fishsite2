@@ -3,6 +3,15 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { notFound } from 'next/navigation';
+import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb';
+import type { Metadata } from 'next';
 
 export async function generateStaticParams() {
   const { categories } = await getCategories();
@@ -18,6 +27,27 @@ interface CategoryPageProps {
   };
 }
 
+export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
+  const { categories } = await getCategories();
+  const category = categories.nodes.find(cat => cat.slug === params.slug);
+
+  if (!category) {
+    return {
+      title: 'Category Not Found - The Reel Authority',
+      description: 'The requested category could not be found.',
+    };
+  }
+
+  return {
+    title: `${category.name} - The Reel Authority`,
+    description: `Explore our collection of fishing articles and tips about ${category.name}.`,
+    openGraph: {
+      title: `${category.name} - The Reel Authority`,
+      description: `Explore our collection of fishing articles and tips about ${category.name}.`,
+    },
+  };
+}
+
 export default async function CategoryPage({ params }: CategoryPageProps) {
   const { categories } = await getCategories();
   const { posts } = await getPostsByCategory({ categorySlug: params.slug });
@@ -30,7 +60,21 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold mb-8">{category.name}</h1>
+      <Breadcrumb>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink asChild>
+              <Link href="/">Home</Link>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>{category.name}</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
+
+      <h1 className="text-4xl font-bold mb-8 mt-6">{category.name}</h1>
       
       <div className="grid grid-cols-1 gap-8 mb-8">
         {posts.nodes.map(post => (

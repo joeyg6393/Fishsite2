@@ -3,6 +3,15 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import type { Post } from '@/types';
+import {
+  Breadcrumb,
+  BreadcrumbList,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb';
+import type { Metadata } from 'next';
 
 // This function needs to return ALL possible post slugs
 export async function generateStaticParams() {
@@ -12,6 +21,35 @@ export async function generateStaticParams() {
   return posts.nodes.map((post: Post) => ({
     slug: post.slug,
   }));
+}
+
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const { post } = await getPostBySlug(params.slug);
+
+  if (!post) {
+    return {
+      title: 'Post Not Found - The Reel Authority',
+      description: 'The requested article could not be found.',
+    };
+  }
+
+  // Create a clean excerpt for meta description by removing HTML tags
+  const cleanExcerpt = post.excerpt.replace(/<[^>]*>/g, '');
+
+  return {
+    title: `${post.title} - The Reel Authority`,
+    description: cleanExcerpt,
+    openGraph: {
+      title: `${post.title} - The Reel Authority`,
+      description: cleanExcerpt,
+      images: post.featuredImage ? [
+        {
+          url: post.featuredImage.node.sourceUrl,
+          alt: post.featuredImage.node.altText || post.title,
+        }
+      ] : undefined,
+    },
+  };
 }
 
 export default async function PostPage({ params }: { params: { slug: string } }) {
@@ -29,9 +67,32 @@ export default async function PostPage({ params }: { params: { slug: string } })
     );
   }
 
+  // Get the first category for the breadcrumb
+  const primaryCategory = post.categories.nodes[0];
+
   return (
     <article className="max-w-4xl mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
+      <Breadcrumb>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink asChild>
+              <Link href="/">Home</Link>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbLink asChild>
+              <Link href={`/categories/${primaryCategory.slug}`}>{primaryCategory.name}</Link>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>{post.title}</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
+
+      <h1 className="text-4xl font-bold mb-4 mt-6">{post.title}</h1>
       
       {post.featuredImage && (
         <div className="relative w-full h-[400px] mb-8">
