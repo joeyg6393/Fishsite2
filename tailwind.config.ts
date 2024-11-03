@@ -83,8 +83,79 @@ const config: Config = {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
       },
+      typography: {
+        DEFAULT: {
+          css: {
+            maxWidth: 'none',
+            color: 'inherit',
+            a: {
+              color: 'inherit',
+              textDecoration: 'none',
+              fontWeight: '500',
+            },
+            '[class~="lead"]': {
+              color: 'inherit',
+            },
+            strong: {
+              color: 'inherit',
+            },
+            'ol[type="A"]': {
+              listStyleType: 'upper-alpha',
+            },
+            'ol[type="a"]': {
+              listStyleType: 'lower-alpha',
+            },
+            'ol[type="A" s]': {
+              listStyleType: 'upper-alpha',
+            },
+            'ol[type="a" s]': {
+              listStyleType: 'lower-alpha',
+            },
+            'ol[type="I"]': {
+              listStyleType: 'upper-roman',
+            },
+            'ol[type="i"]': {
+              listStyleType: 'lower-roman',
+            },
+            'ol[type="I" s]': {
+              listStyleType: 'upper-roman',
+            },
+            'ol[type="i" s]': {
+              listStyleType: 'lower-roman',
+            },
+            'ol[type="1"]': {
+              listStyleType: 'decimal',
+            },
+            'ul > li': {
+              position: 'relative',
+            },
+            blockquote: {
+              fontWeight: '400',
+              fontStyle: 'italic',
+              color: 'inherit',
+              borderLeftWidth: '0.25rem',
+              borderLeftColor: 'inherit',
+              quotes: '"\\201C""\\201D""\\2018""\\2019"',
+            },
+            hr: {
+              borderColor: 'inherit',
+              borderTopWidth: 1,
+            },
+            thead: {
+              borderBottomWidth: '1px',
+            },
+            'thead th': {
+              color: 'inherit',
+              fontWeight: '600',
+            },
+          },
+        },
+      },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [
+    require('tailwindcss-animate'),
+    require('@tailwindcss/typography'),
+  ],
 };
 export default config;

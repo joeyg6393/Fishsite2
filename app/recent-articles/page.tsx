@@ -71,7 +71,7 @@ export default async function RecentArticlesPage() {
                 <div className="p-6">
                   <h3 className="text-xl font-semibold mb-2">{post.title}</h3>
                   <div 
-                    className="text-gray-600 mb-4 line-clamp-3"
+                    className="wp-content text-gray-600 mb-4 line-clamp-3"
                     dangerouslySetInnerHTML={{ __html: post.excerpt }}
                   />
                   <Button variant="outline" asChild>

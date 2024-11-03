@@ -99,7 +99,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
               <div className="md:w-2/3 p-6">
                 <h2 className="text-2xl font-semibold mb-3">{post.title}</h2>
                 <div 
-                  className="text-gray-600 mb-4"
+                  className="wp-content text-gray-600 mb-4"
                   dangerouslySetInnerHTML={{ __html: post.excerpt }}
                 />
                 <div className="flex items-center justify-between">

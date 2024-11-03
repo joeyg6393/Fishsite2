@@ -113,7 +113,7 @@ export default async function PostPage({ params }: { params: { slug: string } })
       </div>
 
       <div 
-        className="prose lg:prose-xl max-w-none mb-8"
+        className="wp-content"
         dangerouslySetInnerHTML={{ __html: post.content }}
       />
 
