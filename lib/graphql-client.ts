@@ -1,7 +1,15 @@
 import { GraphQLClient } from 'graphql-request';
-import type { Post, Category, PostsResponse } from '@/types';
+import type { Post, Category, PostsResponse } from '../types';
 
-const client = new GraphQLClient('https://green-worm-352283.hostingersite.com/graphql');
+const client = new GraphQLClient('https://green-worm-352283.hostingersite.com/graphql', {
+  // Add Next.js fetch with revalidation
+  fetch: (input: RequestInfo | URL, init?: RequestInit) => {
+    return fetch(input, {
+      ...init,
+      next: { revalidate: 60 } // Revalidate every 60 seconds
+    });
+  }
+});
 
 export async function getPosts() {
   const query = `

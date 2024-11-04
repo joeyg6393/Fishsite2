@@ -13,6 +13,9 @@ import {
 } from '@/components/ui/breadcrumb';
 import type { Metadata } from 'next';
 
+// Add route segment config for ISR
+export const revalidate = 60; // Revalidate this page every 60 seconds
+
 // This function needs to return ALL possible post slugs
 export async function generateStaticParams() {
   const { posts } = await getPosts();
@@ -24,6 +27,7 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  // Add revalidation to the fetch request
   const { post } = await getPostBySlug(params.slug);
 
   if (!post) {
@@ -109,7 +113,7 @@ export default async function PostPage({ params }: { params: { slug: string } })
       <div className="flex items-center mb-8 text-gray-600">
         <span>By {post.author.node.name}</span>
         <span className="mx-2">•</span>
-        <span>{post.categories.nodes.map(cat => cat.name).join(', ')}</span>
+        <span>{post.categories.nodes.map((cat: { name: string }) => cat.name).join(', ')}</span>
       </div>
 
       <div 
