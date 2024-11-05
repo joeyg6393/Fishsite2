@@ -1,5 +1,8 @@
 import { getCategories, getPostsByCategory } from '@/lib/graphql-client';
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
+
+export const revalidate = 3600; // Revalidate every hour
 
 export async function GET(
   request: Request,
@@ -24,6 +27,9 @@ export async function GET(
         })
         .join('')}
     </urlset>`;
+
+    // Revalidate the category sitemap path
+    revalidatePath(`/sitemaps/${params.category}`);
 
     // Return the XML with proper content type
     return new NextResponse(xml, {

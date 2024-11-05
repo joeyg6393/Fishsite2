@@ -1,6 +1,9 @@
 import { MetadataRoute } from 'next';
 import { getCategories } from '@/lib/graphql-client';
 
+// Add revalidation period
+export const revalidate = 3600; // Revalidate every hour
+
 export default async function sitemapIndex(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://thereelauthority.com';
   
