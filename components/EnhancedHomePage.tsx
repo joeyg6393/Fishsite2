@@ -57,7 +57,7 @@ export function EnhancedHomePage({ posts }: EnhancedHomePageProps) {
     { name: 'Ice Fishing', icon: '❄️', slug: 'ice-fishing', id: 'dGVybToxNg==' },
     { name: 'Kayak Fishing', icon: '🛶', slug: 'kayak-fishing', id: 'dGVybToxNw==' },
     { name: 'Saltwater Fishing', icon: '🌊', slug: 'saltwater-fishing', id: 'dGVybToxOA==' },
-    { name: 'Trout Fishing', icon: '🐠', slug: 'trout-fishing', id: 'dGVybTox' }
+    { name: 'Product Comparison', icon: '📊', slug: 'best-products', id: 'dGVybTox' }
   ];
 
   return (
@@ -76,9 +76,9 @@ export function EnhancedHomePage({ posts }: EnhancedHomePageProps) {
               <li><Link href="/" className="text-gray-600 hover:text-blue-600">Home</Link></li>
               <li><Link href="/recent-articles" className="text-gray-600 hover:text-blue-600">Articles</Link></li>
               <li><Link href="/categories/gear-reviews" className="text-gray-600 hover:text-blue-600">Gear Reviews</Link></li>
+              <li><Link href="/categories/best-products" className="text-gray-600 hover:text-blue-600">Product Comparisons</Link></li>
               <li><Link href="/categories/fishing-spots" className="text-gray-600 hover:text-blue-600">Fishing Spots</Link></li>
               <li><Link href="/about" className="text-gray-600 hover:text-blue-600">About</Link></li>
-              <li><Link href="/contact" className="text-gray-600 hover:text-blue-600">Contact</Link></li>
             </ul>
           </nav>
           <div className="hidden lg:block">
