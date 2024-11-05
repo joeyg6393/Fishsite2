@@ -59,17 +59,22 @@ export default async function RecentArticlesPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {categoryPosts.map(post => (
               <article key={post.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-300">
-                {post.featuredImage && (
-                  <Image
-                    src={post.featuredImage.node.sourceUrl}
-                    alt={post.featuredImage.node.altText || post.title}
-                    width={400}
-                    height={200}
-                    className="w-full h-48 object-cover"
-                  />
-                )}
+                <Link href={`/posts/${post.slug}`} className="block">
+                  {post.featuredImage && (
+                    <div className="relative h-48 transition-transform duration-300 hover:scale-105">
+                      <Image
+                        src={post.featuredImage.node.sourceUrl}
+                        alt={post.featuredImage.node.altText || post.title}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                  )}
+                </Link>
                 <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-2">{post.title}</h3>
+                  <Link href={`/posts/${post.slug}`} className="block">
+                    <h3 className="text-xl font-semibold mb-2 hover:text-blue-600 transition-colors">{post.title}</h3>
+                  </Link>
                   <div 
                     className="wp-content text-gray-600 mb-4 line-clamp-3"
                     dangerouslySetInnerHTML={{ __html: post.excerpt }}

@@ -4,15 +4,15 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Menu, Search, ChevronRight, Facebook, Twitter, Instagram, Youtube, MapPin, Star, ChevronDown, ChevronUp } from 'lucide-react';
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel";
+} from '@/components/ui/carousel';
 import type { Post } from '@/types';
 
 interface EnhancedHomePageProps {
@@ -25,7 +25,7 @@ export function EnhancedHomePage({ posts }: EnhancedHomePageProps) {
   // Get the most recent 5 articles
   const recentArticles = posts.slice(0, 5);
 
-  // Filter fishing spots articles - check for multiple possible category names
+  // Filter fishing spots articles
   const fishingSpots = posts.filter(post => 
     post.categories.nodes.some(category => 
       ['fishing-spots', 'fishing spots', 'locations'].some(term => 
@@ -35,7 +35,7 @@ export function EnhancedHomePage({ posts }: EnhancedHomePageProps) {
     )
   ).slice(0, 5);
 
-  // Filter gear reviews - check for multiple possible category names
+  // Filter gear reviews
   const gearReviews = posts.filter(post =>
     post.categories.nodes.some(category => 
       ['gear-reviews', 'gear reviews', 'equipment', 'gear'].some(term => 
@@ -45,7 +45,6 @@ export function EnhancedHomePage({ posts }: EnhancedHomePageProps) {
     )
   ).slice(0, 5);
 
-  // Get the featured image from the most recent fishing spot
   const featuredSpotImage = fishingSpots[0]?.featuredImage?.node.sourceUrl || 'https://images.unsplash.com/photo-1542372147193-a7aca54189cd?q=80&w=1974&auto=format&fit=crop';
 
   const categories = [
@@ -100,18 +99,22 @@ export function EnhancedHomePage({ posts }: EnhancedHomePageProps) {
               {recentArticles.map((post) => (
                 <CarouselItem key={post.id}>
                   <div className="bg-white rounded-lg overflow-hidden shadow-lg">
-                    {post.featuredImage && (
-                      <div className="relative h-[400px] w-full">
-                        <Image
-                          src={post.featuredImage.node.sourceUrl}
-                          alt={post.featuredImage.node.altText || post.title}
-                          fill
-                          className="object-cover"
-                        />
-                      </div>
-                    )}
+                    <Link href={`/posts/${post.slug}`} className="block">
+                      {post.featuredImage && (
+                        <div className="relative h-[400px] w-full transition-transform duration-300 hover:scale-105">
+                          <Image
+                            src={post.featuredImage.node.sourceUrl}
+                            alt={post.featuredImage.node.altText || post.title}
+                            fill
+                            className="object-cover"
+                          />
+                        </div>
+                      )}
+                    </Link>
                     <div className="p-6">
-                      <h3 className="text-2xl font-semibold mb-3">{post.title}</h3>
+                      <Link href={`/posts/${post.slug}`} className="block">
+                        <h3 className="text-2xl font-semibold mb-3 hover:text-blue-600 transition-colors">{post.title}</h3>
+                      </Link>
                       <div 
                         className="text-gray-600 mb-4 line-clamp-2"
                         dangerouslySetInnerHTML={{ __html: post.excerpt }}
@@ -130,6 +133,7 @@ export function EnhancedHomePage({ posts }: EnhancedHomePageProps) {
         </div>
       </section>
 
+      {/* Rest of the component remains unchanged */}
       {/* Popular Fishing Spots */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">

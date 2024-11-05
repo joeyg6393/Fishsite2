@@ -81,23 +81,27 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           <article key={post.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-300">
             <div className="md:flex">
               <div className="md:w-1/3">
-                {post.featuredImage ? (
-                  <div className="relative h-64 md:h-full">
-                    <Image
-                      src={post.featuredImage.node.sourceUrl}
-                      alt={post.featuredImage.node.altText || post.title}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                ) : (
-                  <div className="h-64 md:h-full bg-gray-200 flex items-center justify-center">
-                    <span className="text-gray-400">No image available</span>
-                  </div>
-                )}
+                <Link href={`/posts/${post.slug}`} className="block h-full">
+                  {post.featuredImage ? (
+                    <div className="relative h-64 md:h-full transition-transform duration-300 hover:scale-105">
+                      <Image
+                        src={post.featuredImage.node.sourceUrl}
+                        alt={post.featuredImage.node.altText || post.title}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                  ) : (
+                    <div className="h-64 md:h-full bg-gray-200 flex items-center justify-center transition-transform duration-300 hover:scale-105">
+                      <span className="text-gray-400">No image available</span>
+                    </div>
+                  )}
+                </Link>
               </div>
               <div className="md:w-2/3 p-6">
-                <h2 className="text-2xl font-semibold mb-3">{post.title}</h2>
+                <Link href={`/posts/${post.slug}`} className="block">
+                  <h2 className="text-2xl font-semibold mb-3 hover:text-blue-600 transition-colors">{post.title}</h2>
+                </Link>
                 <div 
                   className="wp-content text-gray-600 mb-4"
                   dangerouslySetInnerHTML={{ __html: post.excerpt }}
