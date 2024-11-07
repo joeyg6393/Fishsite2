@@ -11,6 +11,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
+import { AffiliateDisclaimer } from '@/components/AffiliateDisclaimer';
 import type { Metadata } from 'next';
 
 export async function generateStaticParams() {
@@ -58,6 +59,9 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
     notFound();
   }
 
+  // Check if this is a category that should show the disclaimer
+  const showDisclaimer = ['gear-reviews', 'best-products'].includes(params.slug);
+
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       <Breadcrumb>
@@ -73,6 +77,8 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
+
+      {showDisclaimer && <AffiliateDisclaimer />}
 
       <h1 className="text-4xl font-bold mb-8 mt-6">{category.name}</h1>
       

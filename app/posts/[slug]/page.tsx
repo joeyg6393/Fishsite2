@@ -75,10 +75,10 @@ export default async function PostPage({ params }: { params: { slug: string } })
   // Get the first category for the breadcrumb
   const primaryCategory = post.categories.nodes[0];
 
-  // Check if the post is in either Gear Reviews or Product Comparison categories
+  // Check if the post belongs to either Gear Reviews or Product Comparison categories
   const showDisclaimer = post.categories.nodes.some(
-    (cat: { name: string }) => 
-      cat.name === "Gear Reviews" || cat.name === "Product Comparison"
+    (cat: { slug: string }) => 
+      cat.slug === 'gear-reviews' || cat.slug === 'best-products'
   );
 
   return (
