@@ -12,6 +12,7 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
 import type { Metadata } from 'next';
+import { AffiliateDisclaimer } from '@/components/AffiliateDisclaimer';
 
 // Add route segment config for ISR
 export const revalidate = 60; // Revalidate this page every 60 seconds
@@ -74,6 +75,12 @@ export default async function PostPage({ params }: { params: { slug: string } })
   // Get the first category for the breadcrumb
   const primaryCategory = post.categories.nodes[0];
 
+  // Check if the post is in either Gear Reviews or Product Comparison categories
+  const showDisclaimer = post.categories.nodes.some(
+    (cat: { name: string }) => 
+      cat.name === "Gear Reviews" || cat.name === "Product Comparison"
+  );
+
   return (
     <article className="max-w-4xl mx-auto px-4 py-8">
       <Breadcrumb>
@@ -95,6 +102,8 @@ export default async function PostPage({ params }: { params: { slug: string } })
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
+
+      {showDisclaimer && <AffiliateDisclaimer />}
 
       <h1 className="text-4xl font-bold mb-4 mt-6">{post.title}</h1>
       
