@@ -11,6 +11,10 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
 import type { Metadata } from 'next';
+import { Post } from '@/types';
+
+// Add revalidation period - 2 hours
+export const revalidate = 7200;
 
 export const metadata: Metadata = {
   title: 'Recent Articles - The Reel Authority',
@@ -25,15 +29,15 @@ export default async function RecentArticlesPage() {
   const { posts } = await getPosts();
   
   // Group posts by category
-  const postsByCategory = posts.nodes.reduce((acc, post) => {
-    post.categories.nodes.forEach(category => {
+  const postsByCategory = posts.nodes.reduce((acc: Record<string, Post[]>, post: Post) => {
+    post.categories.nodes.forEach((category) => {
       if (!acc[category.name]) {
         acc[category.name] = [];
       }
       acc[category.name].push(post);
     });
     return acc;
-  }, {} as Record<string, typeof posts.nodes>);
+  }, {});
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
@@ -57,7 +61,7 @@ export default async function RecentArticlesPage() {
         <section key={category} className="mb-12">
           <h2 className="text-2xl font-semibold mb-6">{category}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {categoryPosts.map(post => (
+            {categoryPosts.map((post: Post) => (
               <article key={post.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition duration-300">
                 <Link href={`/posts/${post.slug}`} className="block">
                   {post.featuredImage && (

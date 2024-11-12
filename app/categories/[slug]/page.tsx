@@ -14,6 +14,9 @@ import {
 import { AffiliateDisclaimer } from '@/components/AffiliateDisclaimer';
 import type { Metadata } from 'next';
 
+// Add revalidation period - 2 hours
+export const revalidate = 7200;
+
 export async function generateStaticParams() {
   const { categories } = await getCategories();
   
