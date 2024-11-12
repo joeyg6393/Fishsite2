@@ -79,4 +79,8 @@
   .wp-content {
     @apply prose lg:prose-xl max-w-none;
   }
+  
+  .wp-content a {
+    @apply text-blue-600 hover:text-blue-800 underline;
+  }
 }
