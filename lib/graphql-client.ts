@@ -11,6 +11,21 @@ const client = new GraphQLClient('https://green-worm-352283.hostingersite.com/gr
   }
 });
 
+export async function getPageById(id: number) {
+  const query = `
+    query GetPageById($id: ID!) {
+      page(id: $id, idType: DATABASE_ID) {
+        id
+        title
+        content
+        slug
+      }
+    }
+  `;
+
+  return client.request<{ page: { id: string; title: string; content: string; slug: string } }>(query, { id });
+}
+
 export async function getPosts() {
   const query = `
     query GetPosts {
