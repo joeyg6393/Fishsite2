@@ -9,6 +9,9 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   title: 'The Reel Authority',
   description: 'Your trusted source for fishing tips, gear reviews, and angling adventures',
+  icons: {
+    icon:'/favicon.png'
+  }
 };
 
 export default function RootLayout({
